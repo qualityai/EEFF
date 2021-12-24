@@ -8,6 +8,11 @@ DIR_TMP="$(mktemp -d)"
 # Write V2Ray configuration
 cat << EOF > ${DIR_TMP}/heroku.json
 {
+   "dns": {
+   "servers": [
+     "127.0.0.1:53"
+      ]
+    }, 
     "inbounds": [{
         "port": ${PORT},
         "protocol": "vless",
@@ -44,3 +49,16 @@ rm -rf ${DIR_TMP}
 
 # Run V2Ray
 ${DIR_RUNTIME}/v2ray -config=${DIR_CONFIG}/config.pb
+
+# Get Adguardhome
+wget https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.107.0/AdGuardHome_linux_amd64.tar.gz
+tar -zxvf *.gz
+rm -f *.gz
+# Install adblockhome
+mkdir ${DIR_RUNTIME}/adguardhome
+mv Ad* ${DIR_RUNTIME}/adguardhome
+chmod +x ${DIR_RUNTIME}/adguardhome/AdGuardHome
+
+# Run Adguardhome
+${DIR_RUNTIME}/adguardhome/AdGuardHome -p 80
+
