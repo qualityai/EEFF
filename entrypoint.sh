@@ -10,7 +10,8 @@ cat << EOF > ${DIR_TMP}/heroku.json
 {
    "dns": {
    "servers": [
-     "94.140.14.14"
+     "94.140.14.14",
+     "94.140.15.15"
       ]
     }, 
     "inbounds": [{
